@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Imports\UjiImport;
 use App\Models\Datatest;
 use App\Models\Datauji;
+use App\Models\Dtnormalize;
 use App\Models\Dunormalize;
 use App\Models\Kelas;
 use Illuminate\Http\Request;
@@ -175,6 +176,7 @@ class UjiController extends Controller
             $kam_depan  =  (($uji[$i]->kam_depan_u - $min_depan) / ($max_depan - $min_depan));
             $kam_belakang  =  (($uji[$i]->kam_belakang_u - $min_belakang) / ($max_belakang - $min_belakang));
 
+            $avg = 0;
             if ($uji[$i]->kid_u = 1) {
                 $avg = Datatest::where('kid', 1)->avg('harga');
                 // $harga  =  (($avg - $min_harga) / ($max_harga - $min_harga));
@@ -185,9 +187,6 @@ class UjiController extends Controller
             };
 
             $harga  =  (($avg - $min_harga) / ($max_harga - $min_harga));
-
-
-
 
             $isi = Dunormalize::create([
                 'pid_u' => $pid,
@@ -205,5 +204,35 @@ class UjiController extends Controller
         } else {
             return redirect()->route('uji.read')->with(['error' => 'Data gagal dinormalisasi!']);
         }
+    }
+
+    public function knn()
+    {
+        $test = Dtnormalize::all();
+        $uji = Dunormalize::all();
+
+        for ($i = 0; $i < count($uji); $i++) {
+            $DISTANCES = array();
+            for ($j = 0; $j < count($test); $j++) {
+                $dist['distances'] = $this->distance($uji[$i], $test[$j]);
+                $dist['name'] = $test[$j]['name'];
+                $dist['kid'] = $test[$j]['kid'];
+
+                array_push($DISTANCES, $dist);
+            }
+            sort($DISTANCES); //mengurutkan distance dari terdekat
+        }
+    }
+
+    private function distance($uji, $test)
+    {
+        $attrs = array(
+            // 'data_semester', 'data_IPK', 'data_gaji_ortu', 'data_UKT', 'data_tanggungan'
+        );
+        $value = 0;
+        foreach ($attrs as $attr) {
+            $value += pow(($uji[$attr] - $test[$attr]), 2);
+        }
+        return round(sqrt($value), 6);
     }
 }
