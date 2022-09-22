@@ -16,13 +16,13 @@ class CreateDunormalizeTable extends Migration
         Schema::create('dunormalize', function (Blueprint $table) {
             $table->id('pid_u');
             //$table->string('ujiname');
-            $table->integer('ujiram');
-            $table->integer('ujibaterai');
-            $table->integer('ujiinternal');
-            $table->float('ujikam_depan');
-            $table->float('ujikam_belakang');
-            $table->integer('ujiharga');
-            // $table->string('ujiklasifikasi');
+            $table->integer('nram');
+            $table->integer('nbaterai');
+            $table->integer('ninternal');
+            $table->float('nkam_depan');
+            $table->float('nkam_belakang');
+            $table->integer('nharga');
+            // $table->string('nklasifikasi');
             $table->timestamps();
 
             // $table->foreign('pid_u')->references('id')->on('datauji')->onDelete('cascade');

@@ -228,6 +228,7 @@ class UjiController extends Controller
     {
         $attrs = array(
             // 'data_semester', 'data_IPK', 'data_gaji_ortu', 'data_UKT', 'data_tanggungan'
+            'nram', 'ninternal', 'nbaterai', 'nkam_depan', 'nkam_belakang', 'nharga'
         );
         $value = 0;
         foreach ($attrs as $attr) {

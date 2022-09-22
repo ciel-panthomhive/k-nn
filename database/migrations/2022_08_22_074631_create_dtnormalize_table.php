@@ -16,12 +16,12 @@ class CreateDtnormalizeTable extends Migration
         Schema::create('dtnormalize', function (Blueprint $table) {
             $table->id('pid');
             // $table->float('testname');
-            $table->float('testram');
-            $table->integer('testinternal');
-            $table->float('testbaterai');
-            $table->float('testkam_depan');
-            $table->float('testkam_belakang');
-            $table->float('testharga');
+            $table->float('nram');
+            $table->integer('ninternal');
+            $table->float('nbaterai');
+            $table->float('nkam_depan');
+            $table->float('nkam_belakang');
+            $table->float('nharga');
             // $table->float('testklasifikasi');
             $table->timestamps();
 
