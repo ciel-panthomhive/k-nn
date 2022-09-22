@@ -9,6 +9,7 @@ use App\Models\Dunormalize;
 use App\Models\Kelas;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
+use PhpParser\Node\Stmt\ElseIf_;
 
 class UjiController extends Controller
 {
@@ -161,6 +162,7 @@ class UjiController extends Controller
         $max_harga = Datatest::max('harga_u');
         $min_harga = Datatest::min('harga_u');
 
+
         $baris = Datauji::count();
 
 
@@ -172,7 +174,20 @@ class UjiController extends Controller
             $baterai  =  (($uji[$i]->baterai_u - $min_baterai) / ($max_baterai - $min_baterai));
             $kam_depan  =  (($uji[$i]->kam_depan_u - $min_depan) / ($max_depan - $min_depan));
             $kam_belakang  =  (($uji[$i]->kam_belakang_u - $min_belakang) / ($max_belakang - $min_belakang));
-            $harga  =  (($uji[$i]->harga_u - $min_harga) / ($max_harga - $min_harga));
+
+            if ($uji[$i]->kid_u = 1) {
+                $avg = Datatest::where('kid', 1)->avg('harga');
+                // $harga  =  (($avg - $min_harga) / ($max_harga - $min_harga));
+            } elseif ($uji[$i]->kid_u = 2) {
+                $avg = Datatest::where('kid', 2)->avg('harga');
+            } else {
+                $avg = Datatest::where('kid', 3)->avg('harga');
+            };
+
+            $harga  =  (($avg - $min_harga) / ($max_harga - $min_harga));
+
+
+
 
             $isi = Dunormalize::create([
                 'pid_u' => $pid,
