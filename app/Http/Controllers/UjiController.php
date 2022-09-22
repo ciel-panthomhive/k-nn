@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Imports\UjiImport;
+use App\Models\Datatest;
 use App\Models\Datauji;
 use App\Models\Dunormalize;
 use App\Models\Kelas;
@@ -142,23 +143,23 @@ class UjiController extends Controller
         // $test = Dunormalize::all();
 
         //min max
-        $max_ram = Datauji::max('ram_u');
-        $min_ram = Datauji::min('ram_u');
+        $max_ram = Datatest::max('ram_u');
+        $min_ram = Datatest::min('ram_u');
 
-        $max_inter = Datauji::max('internal_u');
-        $min_inter = Datauji::min('internal_u');
+        $max_inter = Datatest::max('internal_u');
+        $min_inter = Datatest::min('internal_u');
 
-        $max_baterai = Datauji::max('baterai_u');
-        $min_baterai = Datauji::min('baterai_u');
+        $max_baterai = Datatest::max('baterai_u');
+        $min_baterai = Datatest::min('baterai_u');
 
-        $max_depan = Datauji::max('kam_depan_u');
-        $min_depan = Datauji::min('kam_depan_u');
+        $max_depan = Datatest::max('kam_depan_u');
+        $min_depan = Datatest::min('kam_depan_u');
 
-        $max_belakang = Datauji::max('kam_belakang_u');
-        $min_belakang = Datauji::min('kam_belakang_u');
+        $max_belakang = Datatest::max('kam_belakang_u');
+        $min_belakang = Datatest::min('kam_belakang_u');
 
-        $max_harga = Datauji::max('harga_u');
-        $min_harga = Datauji::min('harga_u');
+        $max_harga = Datatest::max('harga_u');
+        $min_harga = Datatest::min('harga_u');
 
         $baris = Datauji::count();
 
