@@ -1,7 +1,7 @@
 @extends('layouts.component.sidebar1')
 {{-- @extends('admin.isi') --}}
 
-{{-- @push('scripts')
+@push('scripts')
     <script>
         $(document).ready(function() {
             $('.select2-single').select2({
@@ -9,7 +9,7 @@
             });
         });
     </script>
-@endpush --}}
+@endpush
 
 @section('content')
     {{-- <div style="margin-left:20%; padding:1px 16px;height:1000px;"> --}}
@@ -95,7 +95,7 @@
 
                         </div>
 
-                        {{-- <div class="col">
+                        <div class="col">
                             <label>Klasifikasi Smartphone</label>
                             <select class="form-control select2-single" name="kid_u">
                                 @forelse ($kelas as $k)
@@ -111,10 +111,10 @@
                                 </div>
                             @endif
 
-                        </div> --}}
+                        </div>
 
-                        <div class="col">
-                            <label>Harga</label>
+                        {{-- <div class="col">
+                            <label>Kelas</label>
                             <input type="text" name="harga_u" class="form-control" placeholder="Harga smartphone">
 
                             @if ($errors->has('harga_u'))
@@ -123,7 +123,7 @@
                                 </div>
                             @endif
 
-                        </div>
+                        </div> --}}
                     </div>
 
                     <br />
