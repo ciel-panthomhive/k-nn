@@ -18,7 +18,8 @@ class UjiController extends Controller
 {
     public function index()
     {
-        $uji = Datauji::all();
+        $uji = Datauji::with('kelas')
+            ->get();
         $kelas = Kelas::all();
 
         return view('uji.read', ['uji' => $uji, 'kelas' => $kelas]);

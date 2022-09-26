@@ -18,8 +18,8 @@ class Datauji extends Model
         return $this->hasOne(Dunormalize::class, 'pid_u', 'id');
     }
 
-    // public function kelas()
-    // {
-    //     return $this->belongsTo(Kelas::class, 'kid_u', 'id');
-    // }
+    public function kelas()
+    {
+        return $this->belongsTo(Kelas::class, 'kid_u', 'id');
+    }
 }
