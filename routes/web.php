@@ -53,6 +53,8 @@ Route::group(['middleware' => ['web', 'auth']], function () {
     Route::post('/ujinorm', [App\Http\Controllers\UjiController::class, 'normalize'])->name('uji.norm');
     Route::get('/norm.uji', [App\Http\Controllers\UjiController::class, 'norm'])->name('norm');
 
+    Route::get('/uji.get', [App\Http\Controllers\UjiController::class, 'get_arr'])->name('uji.get');
+
     //admin
     Route::get('/profil/{id}', [App\Http\Controllers\DasboardController::class, 'profil'])->name('profil');
     Route::put('/profilupdate/{id}', [App\Http\Controllers\DasboardController::class, 'update'])->name('profil.update');

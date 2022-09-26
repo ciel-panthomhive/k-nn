@@ -11,7 +11,7 @@ class Dtnormalize extends Model
 
     protected $table = 'dtnormalize';
 
-    protected $fillable = ['pid', 'testname', 'testram', 'testinternal', 'testbaterai', 'testkam_depan', 'testkam_belakang', 'testharga', 'testklasifikasi'];
+    protected $fillable = ['pid', 'nname', 'nram', 'ninternal', 'nbaterai', 'nkam_depan', 'nkam_belakang', 'nharga'];
 
     public function datatest()
     {

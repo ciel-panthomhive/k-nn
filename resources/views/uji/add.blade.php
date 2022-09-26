@@ -130,6 +130,7 @@
                     <div class="form-group">
                         <input type="submit" class="btn btn-success" value="Tambah">
                         <a href="{{ route('uji.read') }}" class="btn btn-primary" style="float: right">Kembali</a>
+                        <a href="{{ route('uji.get') }}" class="btn btn-primary" style="float: right">Cek</a>
                     </div>
 
                 </form>

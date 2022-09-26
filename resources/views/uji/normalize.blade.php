@@ -27,12 +27,12 @@
                 <tr>
                     <td>{{ $loop->iteration }}</td>
                     {{-- <td>{{ $t->nama_u }}</td> --}}
-                    <td>{{ $t->ujiram }}</td>
-                    <td>{{ $t->ujiinternal }}</td>
-                    <td>{{ $t->ujibaterai }}</td>
-                    <td>{{ $t->ujikam_depan }}</td>
-                    <td>{{ $t->ujikam_belakang }}</td>
-                    <td>{{ $t->ujiharga }}</td>
+                    <td>{{ $t->nram }}</td>
+                    <td>{{ $t->ninternal }}</td>
+                    <td>{{ $t->nbaterai }}</td>
+                    <td>{{ $t->nkam_depan }}</td>
+                    <td>{{ $t->nkam_belakang }}</td>
+                    <td>{{ $t->nharga }}</td>
                 </tr>
             @endforeach
         </tbody>

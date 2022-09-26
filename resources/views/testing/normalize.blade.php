@@ -24,12 +24,12 @@
                 <tr>
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $t->datatest->name }}</td>
-                    <td>{{ $t->testram }}</td>
-                    <td>{{ $t->testinternal }}</td>
-                    <td>{{ $t->testbaterai }}</td>
-                    <td>{{ $t->testkam_depan }}</td>
-                    <td>{{ $t->testkam_belakang }}</td>
-                    <td>{{ $t->testharga }}</td>
+                    <td>{{ $t->nram }}</td>
+                    <td>{{ $t->ninternal }}</td>
+                    <td>{{ $t->nbaterai }}</td>
+                    <td>{{ $t->nkam_depan }}</td>
+                    <td>{{ $t->nkam_belakang }}</td>
+                    <td>{{ $t->nharga }}</td>
                 </tr>
             @endforeach
         </tbody>

@@ -30,7 +30,7 @@
                 <th>Baterai</th>
                 <th>Kamera Depan</th>
                 <th>Kamera Belakang</th>
-                <th>Harga</th>
+                <th>Klasifikasi</th>
                 {{-- <th>Klasifikasi</th> --}}
                 <th>Action</th>
             </tr>
@@ -45,7 +45,7 @@
                     <td>{{ $t->baterai_u }}</td>
                     <td>{{ $t->kam_depan_u }}</td>
                     <td>{{ $t->kam_belakang_u }}</td>
-                    <td>{{ $t->harga_u }}</td>
+                    <td>{{ $t->kid_u }}</td>
                     {{-- <td>
                         @isset($t->kelas)
                             {{ $t->kelas->klas }}

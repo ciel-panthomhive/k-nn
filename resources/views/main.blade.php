@@ -95,11 +95,12 @@
 
                         <div class="col">
                             <label>Kelas Smartphone</label>
-                            <select class="form-control select2-single" name="klasifikasi">
-                                <option value="Entry-level">Entry-level</option>
-                                <option value="Mid-range">Mid-range</option>
-                                <option value="High-end">High-end</option>
-                                <option value="Flagship">Flagship</option>
+                            <select class="form-control select2-single" name="kid">
+                                @forelse ($kelas as $k)
+                                    <option value="{{ $k->id }}">{{ $k->klas }} </option>
+                                @empty
+                                    <option value=""> </option>
+                                @endforelse
                             </select>
 
                             @if ($errors->has('klasifikasi'))

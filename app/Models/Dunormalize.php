@@ -11,7 +11,7 @@ class Dunormalize extends Model
 
     protected $table = 'dunormalize';
 
-    protected $fillable = ['pid_u', 'ujiram', 'ujiinternal', 'ujibaterai', 'ujikam_depan', 'ujikam_belakang', 'ujiharga'];
+    protected $fillable = ['pid_u', 'nram', 'ninternal', 'nbaterai', 'nkam_depan', 'nkam_belakang', 'nharga'];
 
     public function datauji()
     {

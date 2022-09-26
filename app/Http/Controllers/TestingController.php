@@ -249,12 +249,12 @@ class TestingController extends Controller
                 // dd($request)
 
                 'pid' => $pid,
-                'testram' => $ram,
-                'testinternal' => $internal,
-                'testbaterai' => $baterai,
-                'testkam_depan' => $kam_depan,
-                'testkam_belakang' => $kam_belakang,
-                'testharga' => $harga,
+                'nram' => $ram,
+                'ninternal' => $internal,
+                'nbaterai' => $baterai,
+                'nkam_depan' => $kam_depan,
+                'nkam_belakang' => $kam_belakang,
+                'nharga' => $harga,
             ]);
         }
         // dd($isi);

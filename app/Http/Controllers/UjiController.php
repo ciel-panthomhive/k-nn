@@ -9,7 +9,9 @@ use App\Models\Dtnormalize;
 use App\Models\Dunormalize;
 use App\Models\Kelas;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
+use Phpml\Classification\KNearestNeighbors;
 use PhpParser\Node\Stmt\ElseIf_;
 
 class UjiController extends Controller
@@ -64,6 +66,62 @@ class UjiController extends Controller
         }
     }
 
+    public function get_arr()
+    {
+        // $samples = [[8, 11], [9, 10], [2, 4], [3, 1], [7, 10], [4, 2]];
+        // $labels = ['Watermelon', 'Watermelon', 'Apple', 'Apple', 'Watermelon', 'Apple'];
+
+        // $classifier = new KNearestNeighbors();
+        // $classifier->train($samples, $labels);
+
+        // $prediction = $classifier->predict([8, 10]);
+        // echo $prediction;
+
+        // dd($labels);
+
+
+        // $data = DB::table('datatest')
+        //     ->select('ram', 'internal', 'baterai', 'kam_depan', 'kam_belakang')
+        //     ->get();
+        // // If you are using Eloquent, you can just use ->toarray();
+        // // For query builder, you need to change stdClass to array, so I use json_decode()
+        // //
+        // $data->map(function ($k) {
+        //     return array_values((array)$k);
+        // });
+
+        $data = Datatest::get(['ram', 'internal', 'baterai', 'kam_depan', 'kam_belakang'])->map(function ($item) {
+            return array_values($item->toArray());
+        });
+        // $data = json_decode(json_encode($data, true), true);
+
+        $samples = $data->toArray();
+
+        // $data_label = DB::table('datatest')
+        //     ->select('kid')
+        //     ->get()->toArray();
+        // If you are using Eloquent, you can just use ->toarray();
+        // For query builder, you need to change stdClass to array, so I use json_decode()
+        //
+        $label = Datatest::pluck('kid')->toArray();
+        $classifier = new KNearestNeighbors();
+
+        $classifier->train($samples, $label);
+        $hasil = $classifier->predict([4, 128, 4000, 80, 32]);
+
+        var_dump($samples);
+        var_dump($label);
+
+        // echo $samples;
+
+        // echo $label;
+        echo gettype($samples);
+
+        echo gettype($label);
+
+        // dd($label);
+        dd($hasil);
+    }
     public function delete($id)
     {
         $uji = Datauji::find($id);
