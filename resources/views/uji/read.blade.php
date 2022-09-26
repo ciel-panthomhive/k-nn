@@ -45,12 +45,12 @@
                     <td>{{ $t->baterai_u }}</td>
                     <td>{{ $t->kam_depan_u }}</td>
                     <td>{{ $t->kam_belakang_u }}</td>
-                    <td>{{ $t->kid_u }}</td>
-                    {{-- <td>
+                    {{-- <td>{{ $t->kid_u }}</td>  --}}
+                    <td>
                         @isset($t->kelas)
                             {{ $t->kelas->klas }}
                         @endisset
-                    </td> --}}
+                    </td>
                     <td>
                         <a href="{{ route('uji.delete', ['id' => $t->id]) }}" class="btn btn-danger"><i
                                 class='bx bx-trash nav_icon'></i></a>

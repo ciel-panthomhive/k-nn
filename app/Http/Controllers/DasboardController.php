@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Kelas;
 use App\Models\User;
 use App\Rules\MatchOldPassword;
 use Illuminate\Http\Request;
@@ -10,6 +11,13 @@ use Illuminate\Support\Facades\Hash;
 
 class DasboardController extends Controller
 {
+
+    public function index()
+    {
+        $kelas = Kelas::all();
+
+        return view('main', ['kelas' => $kelas]);
+    }
 
     public function search(Request $request)
     {
@@ -26,7 +34,10 @@ class DasboardController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware(
+            'auth',
+            ['except' => ['index']]
+        );
     }
 
     // public function profil()

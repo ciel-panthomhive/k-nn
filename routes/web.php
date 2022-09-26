@@ -20,10 +20,10 @@ use Illuminate\Support\Facades\Route;
 
 
 // route utama
-Route::get('/', function () {
-    return view('main');
-});
-// Route::get('/', [App\Http\Controllers\DasboardController::class, 'index'])->name('dashboard');
+// Route::get('/', function () {
+//     return view('main');
+// });
+Route::get('/', [App\Http\Controllers\DasboardController::class, 'index'])->name('dashboard');
 Route::post('/search', 'App\Http\Controllers\DasboardController@search')->name('cari');
 
 Auth::routes();
