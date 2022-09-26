@@ -17,7 +17,7 @@ class CreateDtnormalizeTable extends Migration
             $table->id('pid');
             // $table->float('testname');
             $table->float('nram');
-            $table->integer('ninternal');
+            $table->float('ninternal');
             $table->float('nbaterai');
             $table->float('nkam_depan');
             $table->float('nkam_belakang');

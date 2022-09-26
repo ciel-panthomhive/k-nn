@@ -16,12 +16,12 @@ class CreateDunormalizeTable extends Migration
         Schema::create('dunormalize', function (Blueprint $table) {
             $table->id('pid_u');
             //$table->string('ujiname');
-            $table->integer('nram');
-            $table->integer('nbaterai');
-            $table->integer('ninternal');
+            $table->float('nram');
+            $table->float('nbaterai');
+            $table->float('ninternal');
             $table->float('nkam_depan');
             $table->float('nkam_belakang');
-            $table->integer('nharga');
+            $table->float('nharga');
             // $table->string('nklasifikasi');
             $table->timestamps();
 

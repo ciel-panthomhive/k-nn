@@ -241,14 +241,16 @@ class UjiController extends Controller
 
             //untuk normalisasi harga diambil dari rata" harga datatest dengan kelas atau klasifikasi yang sama
             $avg = 0; //deklarasi variabel, akan diisi nilai hasil dari if else
-            if ($uji[$i]->kid_u = 1) { //jika idi kelas pada datauji = 1
+            if ($uji[$i]->kid_u == 1) { //jika idi kelas pada datauji = 1
                 $avg = Datatest::where('kid', 1)->avg('harga'); //maka $avg/harga dari tabel datauji = rata" seluruh harga di datatest yang kid/ id kelasnya=1
                 // $harga  =  (($avg - $min_harga) / ($max_harga - $min_harga));
-            } elseif ($uji[$i]->kid_u = 2) {
+            } elseif ($uji[$i]->kid_u == 2) {
                 $avg = Datatest::where('kid', 2)->avg('harga'); //maka $avg/harga dari tabel datauji = rata" seluruh harga di datatest yang kid/ id kelasnya=2
             } else {
                 $avg = Datatest::where('kid', 3)->avg('harga'); //maka $avg/harga dari tabel datauji = rata" seluruh harga di datatest yang kid/ id kelasnya=3
             };
+
+            // var_dump($avg);
 
             $harga  =  (($avg - $min_harga) / ($max_harga - $min_harga)); //normalisasi harga, $vg berisi rata" data dari if else
 
