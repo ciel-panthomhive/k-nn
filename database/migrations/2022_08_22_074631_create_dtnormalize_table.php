@@ -15,14 +15,14 @@ class CreateDtnormalizeTable extends Migration
     {
         Schema::create('dtnormalize', function (Blueprint $table) {
             $table->id('pid');
-            // $table->float('testname');
+            $table->float('nname');
             $table->float('nram');
             $table->float('ninternal');
             $table->float('nbaterai');
             $table->float('nkam_depan');
             $table->float('nkam_belakang');
             $table->float('nharga');
-            // $table->float('testklasifikasi');
+            $table->float('nklas');
             $table->timestamps();
 
             // $table->foreign('pid')->references('id')->on('datatest')->onDelete('cascade');

@@ -13,6 +13,7 @@ class SearchController extends Controller
 {
     public function search(Request $request)
     {
+        Datauji::truncate();
         $kelas = Kelas::all();
         $tes_train = Datatest::with('kelas');
         $test_uji = Datauji::with('kelas');
@@ -20,6 +21,7 @@ class SearchController extends Controller
         $train = Datatest::all();
         $unorm = Dunormalize::all();
         $tnorm = Dtnormalize::all();
+        $k = 5;
 
         //fungsi masukkan data ke tabel data uji
         $this->validate($request, [
@@ -89,6 +91,19 @@ class SearchController extends Controller
 
         //proses knn
         //perhitungan euclid
+        $DISTANCES = array(); //deklarasi variablel dalam bentuk array, aku gatau ini bisa dipake apa nggak
+        for ($j = 0; $j < count($tnorm); $j++) { //perulangan berdasarkan tabel datatest
+            $dist['distances'] = $this->distance($isi, $tnorm[$j]); //$dist kayanya variabel baru, 'distance' kayanya dari private function dibawah, tapi karena dia di bawah aku gatau bakal bisa dipanggil disini ato nggak
+            $dist['nname'] = $tnorm[$j]['nname']; //$dist name berisi kolom 'name' dari data test, aku gatau kenapa kudu name, atau mungkin bisa diganti yg lain, bisa aja karena name gabisa dihitung
+            $dist['nklas'] = $tnorm[$j]['nklas']; // aku juga gatau apa ini harus pake id kelas dengan alasan yang sama juga
+
+            array_push($DISTANCES, $dist); //mengisi array distance dengan data dari $dist
+        }
+
+        //mengurutkan distance dari terdekat
+        sort($DISTANCES);
+
+
 
 
 

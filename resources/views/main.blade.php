@@ -29,11 +29,11 @@
                     <div class="row">
                         <div class="col">
                             <label>Kapasitas RAM</label>
-                            <input type="text" name="ram" class="form-control" placeholder="Kapasitas RAM">
+                            <input type="text" name="ram_u" class="form-control" placeholder="Kapasitas RAM">
 
-                            @if ($errors->has('ram'))
+                            @if ($errors->has('ram_u'))
                                 <div class="text-danger">
-                                    {{ $errors->first('ram') }}
+                                    {{ $errors->first('ram_u') }}
                                 </div>
                             @endif
 
@@ -41,12 +41,12 @@
 
                         <div class="col">
                             <label>Kapasitas Internal</label>
-                            <input type="text" name="internal" class="form-control"
+                            <input type="text" name="internal_u" class="form-control"
                                 placeholder="Kapasitas memori internal">
 
-                            @if ($errors->has('internal'))
+                            @if ($errors->has('internal_u'))
                                 <div class="text-danger">
-                                    {{ $errors->first('internal') }}
+                                    {{ $errors->first('internal_u') }}
                                 </div>
                             @endif
 
@@ -56,11 +56,12 @@
                     <div class="row">
                         <div class="col">
                             <label>Kamera Utama</label>
-                            <input type="text" name="kam_bel" class="form-control" placeholder="Resolusi kamera utama">
+                            <input type="text" name="kam_belakang_u" class="form-control"
+                                placeholder="Resolusi kamera utama">
 
-                            @if ($errors->has('kam_bel'))
+                            @if ($errors->has('kam_belakang_u'))
                                 <div class="text-danger">
-                                    {{ $errors->first('kam_bel') }}
+                                    {{ $errors->first('kam_belakang_u') }}
                                 </div>
                             @endif
 
@@ -68,11 +69,12 @@
 
                         <div class="col">
                             <label>Kamera Depan</label>
-                            <input type="text" name="kam_dep" class="form-control" placeholder="Resolusi kamera depan">
+                            <input type="text" name="kam_depan_u" class="form-control"
+                                placeholder="Resolusi kamera depan">
 
-                            @if ($errors->has('kam_bel'))
+                            @if ($errors->has('kam_depan_u'))
                                 <div class="text-danger">
-                                    {{ $errors->first('kam_bel') }}
+                                    {{ $errors->first('kam_depan_u') }}
                                 </div>
                             @endif
 
@@ -83,17 +85,17 @@
                     <div class="row">
                         <div class="col">
                             <label>Kapasitas Baterai</label>
-                            <input type="text" name="baterai" class="form-control" placeholder="Kapasitas baterai">
+                            <input type="text" name="baterai_u" class="form-control" placeholder="Kapasitas baterai">
 
-                            @if ($errors->has('baterai'))
+                            @if ($errors->has('baterai_u'))
                                 <div class="text-danger">
-                                    {{ $errors->first('baterai') }}
+                                    {{ $errors->first('baterai_u') }}
                                 </div>
                             @endif
 
                         </div>
 
-                        <div class="col">
+                        {{-- <div class="col">
                             <label>Kelas Smartphone</label>
                             <select class="form-control select2-single" name="kid">
                                 @forelse ($kelas as $k)
@@ -109,7 +111,7 @@
                                 </div>
                             @endif
 
-                        </div>
+                        </div> --}}
                     </div>
 
                     <br />

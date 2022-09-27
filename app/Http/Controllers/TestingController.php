@@ -226,12 +226,14 @@ class TestingController extends Controller
             // dd($test->internal);
             // dd($test);
             $pid = $train[$i]->id;
+            $name = $train[$i]->name;
             $ram  =  (($train[$i]->ram - $min_ram) / ($max_ram - $min_ram));
             $internal  =  (($train[$i]->internal - $min_inter) / ($max_inter - $min_inter));
             $baterai  =  (($train[$i]->baterai - $min_baterai) / ($max_baterai - $min_baterai));
             $kam_depan  =  (($train[$i]->kam_depan - $min_depan) / ($max_depan - $min_depan));
             $kam_belakang  =  (($train[$i]->kam_belakang - $min_belakang) / ($max_belakang - $min_belakang));
             $harga  =  (($train[$i]->harga - $min_harga) / ($max_harga - $min_harga));
+            $klas = $train[$i]->kid;
 
             // dd($pid);
 
@@ -255,6 +257,7 @@ class TestingController extends Controller
                 'nkam_depan' => $kam_depan,
                 'nkam_belakang' => $kam_belakang,
                 'nharga' => $harga,
+                'nklas' => $klas,
             ]);
         }
         // dd($isi);
