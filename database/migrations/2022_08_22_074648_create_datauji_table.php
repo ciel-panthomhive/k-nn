@@ -23,7 +23,7 @@ class CreateDataujiTable extends Migration
             $table->float('kam_belakang_u');
             // $table->integer('harga_u');
             // $table->integer('harga_max_u');
-            $table->unsignedBigInteger('kid_u');
+            $table->unsignedBigInteger('kid_u')->nullable();
             $table->timestamps();
 
             // $table->foreign('kid_u')->references('id')->on('kelas')->onDelete('cascade')->onUpdate('cascade');

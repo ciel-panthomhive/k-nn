@@ -21,7 +21,7 @@ class CreateDunormalizeTable extends Migration
             $table->float('ninternal');
             $table->float('nkam_depan');
             $table->float('nkam_belakang');
-            $table->float('nharga');
+            $table->float('nharga')->nullable();
             // $table->string('nklasifikasi');
             $table->timestamps();
 
