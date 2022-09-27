@@ -19,18 +19,18 @@ class DasboardController extends Controller
         return view('main', ['kelas' => $kelas]);
     }
 
-    public function search(Request $request)
-    {
-        dd($request->all());
-        // "ram" => "8"
-        // "internal" => "128 GB"
-        // "kam_bel" => "13"
-        // "kam_dep" => "13"
-        // "baterai" => "5000"
-        // "klasifikasi" => "Flagship"
+    // public function search(Request $request)
+    // {
+    // dd($request->all());
+    // "ram" => "8"
+    // "internal" => "128 GB"
+    // "kam_bel" => "13"
+    // "kam_dep" => "13"
+    // "baterai" => "5000"
+    // "klasifikasi" => "Flagship"
 
-        return view('admin.isi');
-    }
+    //     return view('admin.isi');
+    // }
 
     public function __construct()
     {
