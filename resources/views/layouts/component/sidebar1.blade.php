@@ -115,13 +115,13 @@
 
         <li class="{{ request()->is('home', 'testadd') ? 'active' : '' }}">
             <a href="{{ route('home') }}">
-                <i class='bx bx-grid-alt nav_icon'>&nbsp;&nbsp;Data Testing</i>
+                <i class='bx bx-grid-alt nav_icon'>&nbsp;&nbsp;Data Training</i>
             </a>
         </li>
-        <li class="{{ request()->is('uji', 'ujiadd') ? 'active' : '' }}"><a href="{{ route('uji.read') }}">
+        {{-- <li class="{{ request()->is('uji', 'ujiadd') ? 'active' : '' }}"><a href="{{ route('uji.read') }}">
                 <i class='bx bx-bar-chart-alt-2 nav_icon'>&nbsp;&nbsp;Data Uji</i>
             </a>
-        </li>
+        </li> --}}
         <li class="{{ request()->is('profil/{id)') ? 'active' : '' }}"><a
                 href="{{ route('profil', ['id' => Auth::user()->id]) }}">
                 <i class='bx bx-user nav_icon'>&nbsp;&nbsp;Profil</i>

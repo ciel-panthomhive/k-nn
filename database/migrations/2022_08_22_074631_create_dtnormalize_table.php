@@ -15,7 +15,7 @@ class CreateDtnormalizeTable extends Migration
     {
         Schema::create('dtnormalize', function (Blueprint $table) {
             $table->id('pid');
-            $table->float('nname');
+            // $table->float('nname');
             $table->float('nram');
             $table->float('ninternal');
             $table->float('nbaterai');

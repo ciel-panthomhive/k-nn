@@ -11,10 +11,15 @@ class Dtnormalize extends Model
 
     protected $table = 'dtnormalize';
 
-    protected $fillable = ['pid', 'nname', 'nram', 'ninternal', 'nbaterai', 'nkam_depan', 'nkam_belakang', 'nharga'];
+    protected $fillable = ['pid', 'nram', 'ninternal', 'nbaterai', 'nkam_depan', 'nkam_belakang', 'nharga', 'nklas'];
 
     public function datatest()
     {
         return $this->belongsTo(Datatest::class, 'pid', 'id');
+    }
+
+    public function kelas()
+    {
+        return $this->belongsTo(Kelas::class, 'nklas', 'id');
     }
 }

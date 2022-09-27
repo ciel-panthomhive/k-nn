@@ -18,8 +18,13 @@ class Kelas extends Model
         return $this->hasMany(Datatest::class, 'kid', 'id');
     }
 
-    // public function datauji()
-    // {
-    //     return $this->hasMany(Datauji::class, 'kid_u', 'id');
-    // }
+    public function datauji()
+    {
+        return $this->hasMany(Datauji::class, 'kid_u', 'id');
+    }
+
+    public function dtnormalize()
+    {
+        return $this->hasMany(Dtnormalize::class, 'nklas', 'id');
+    }
 }

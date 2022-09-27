@@ -10,13 +10,14 @@
         <thead>
             <tr>
                 <th style="width:1%">No</th>
-                <th style="width:24%">Nama</th>
+                <th style="width:20%">Nama</th>
                 <th style="width:4%">RAM</th>
                 <th style="width:8%">Internal</th>
-                <th style="width:10%">Baterai</th>
-                <th style="width:9%">Kamera Depan</th>
-                <th style="width:9%">Kamera Belakang</th>
-                <th style="width:10%">Harga</th>
+                <th style="width:8%">Baterai</th>
+                <th style="width:8%">Kamera Depan</th>
+                <th style="width:8%">Kamera Belakang</th>
+                <th style="width:8%">Harga</th>
+                <th style="width:10%">Klasifikasi</th>
             </tr>
         </thead>
         <tbody>
@@ -30,6 +31,12 @@
                     <td>{{ $t->nkam_depan }}</td>
                     <td>{{ $t->nkam_belakang }}</td>
                     <td>{{ $t->nharga }}</td>
+                    {{-- <td>{{ $t->datatest->name }}</td> --}}
+                    <td>
+                        @isset($t->datatest->kelas)
+                            {{ $t->datatest->kelas->klas }}
+                        @endisset
+                    </td>
                 </tr>
             @endforeach
         </tbody>

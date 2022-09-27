@@ -226,7 +226,7 @@ class TestingController extends Controller
             // dd($test->internal);
             // dd($test);
             $pid = $train[$i]->id;
-            $name = $train[$i]->name;
+            // $name = $train[$i]->name;
             $ram  =  (($train[$i]->ram - $min_ram) / ($max_ram - $min_ram));
             $internal  =  (($train[$i]->internal - $min_inter) / ($max_inter - $min_inter));
             $baterai  =  (($train[$i]->baterai - $min_baterai) / ($max_baterai - $min_baterai));
@@ -251,6 +251,7 @@ class TestingController extends Controller
                 // dd($request)
 
                 'pid' => $pid,
+                // 'nname' => $name,
                 'nram' => $ram,
                 'ninternal' => $internal,
                 'nbaterai' => $baterai,
@@ -271,7 +272,7 @@ class TestingController extends Controller
     public function norm()
     {
         // $test = Datatest::all();
-        $dt = Dtnormalize::with(['Datatest'])->get();
+        $dt = Dtnormalize::with(['Datatest', 'kelas'])->get();
 
         return view('testing.normalize', ['dt' => $dt]);
     }
