@@ -115,4 +115,18 @@ class SearchController extends Controller
 
         return view('hasil', ['hasil' => $hasil]);
     }
+
+    private function distance($uji, $test)
+    {
+        $attrs = array(
+            // 'data_semester', 'data_IPK', 'data_gaji_ortu', 'data_UKT', 'data_tanggungan'
+            'nram', 'ninternal', 'nbaterai', 'nkam_depan', 'nkam_belakang', 'nharga' //atribut dari tabel dtnormalize dan dunormalize
+        );
+        $value = 0; //deklarasi nilai value, akan di update berdasarkan nilai value dibawah
+        foreach ($attrs as $attr) {
+            //value = jumlah (atribut kolom datauji - atribut kolom datatest)^2
+            $value += pow(($uji[$attr] - $test[$attr]), 2);
+        }
+        return round(sqrt($value), 6); // value = jumlah value diatas diakar, dibulatkan menjadi maksimal 6 angka dibelakang koma)
+    }
 }
