@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 
 class SearchController extends Controller
 {
-    public function search($request)
+    public function search(Request $request)
     {
         $kelas = Kelas::all();
         $tes_train = Datatest::with('kelas');

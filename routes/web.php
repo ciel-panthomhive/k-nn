@@ -24,7 +24,7 @@ use Illuminate\Support\Facades\Route;
 //     return view('main');
 // });
 Route::get('/', [App\Http\Controllers\DasboardController::class, 'index'])->name('dashboard');
-Route::post('/search', 'App\Http\Controllers\DasboardController@search')->name('cari');
+Route::post('/search', 'App\Http\Controllers\SearchController@search')->name('cari');
 
 Auth::routes();
 
