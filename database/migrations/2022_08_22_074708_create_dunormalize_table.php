@@ -14,7 +14,7 @@ class CreateDunormalizeTable extends Migration
     public function up()
     {
         Schema::create('dunormalize', function (Blueprint $table) {
-            $table->id('pid_u');
+            $table->id();
             //$table->string('ujiname');
             $table->float('nram');
             $table->float('nbaterai');

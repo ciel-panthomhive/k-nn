@@ -26,6 +26,21 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [App\Http\Controllers\DasboardController::class, 'index'])->name('dashboard');
 Route::post('/search', 'App\Http\Controllers\SearchController@search')->name('cari');
 
+
+//data uji
+Route::get('/uji', [App\Http\Controllers\UjiController::class, 'index'])->name('uji.read');
+Route::get('/ujiadd', [App\Http\Controllers\UjiController::class, 'add'])->name('uji.add');
+Route::post('/ujinew', [App\Http\Controllers\UjiController::class, 'new'])->name('uji.new');
+Route::get('/ujidelete/{id}', [App\Http\Controllers\UjiController::class, 'delete'])->name('uji.delete');
+Route::get('/ujikosong', [App\Http\Controllers\UjiController::class, 'kosong'])->name('uji.kosong');
+// Route::get('/ujidata', [App\Http\Controllers\UjiController::class, 'data'])->name('uji.data');
+Route::post('/ujiimport', [App\Http\Controllers\UjiController::class, 'import'])->name('uji.import');
+Route::post('/ujinorm', [App\Http\Controllers\UjiController::class, 'normalize'])->name('uji.norm');
+Route::get('/norm.uji', [App\Http\Controllers\UjiController::class, 'norm'])->name('norm');
+
+Route::get('/uji.get', [App\Http\Controllers\UjiController::class, 'get_arr'])->name('uji.get');
+
+
 Auth::routes();
 
 Route::group(['middleware' => ['web', 'auth']], function () {
@@ -43,17 +58,17 @@ Route::group(['middleware' => ['web', 'auth']], function () {
     Route::get('/norm.test', [App\Http\Controllers\TestingController::class, 'norm'])->name('normalisasi');
 
     //data uji
-    Route::get('/uji', [App\Http\Controllers\UjiController::class, 'index'])->name('uji.read');
-    Route::get('/ujiadd', [App\Http\Controllers\UjiController::class, 'add'])->name('uji.add');
-    Route::post('/ujinew', [App\Http\Controllers\UjiController::class, 'new'])->name('uji.new');
-    Route::get('/ujidelete/{id}', [App\Http\Controllers\UjiController::class, 'delete'])->name('uji.delete');
-    Route::get('/ujikosong', [App\Http\Controllers\UjiController::class, 'kosong'])->name('uji.kosong');
-    // Route::get('/ujidata', [App\Http\Controllers\UjiController::class, 'data'])->name('uji.data');
-    Route::post('/ujiimport', [App\Http\Controllers\UjiController::class, 'import'])->name('uji.import');
-    Route::post('/ujinorm', [App\Http\Controllers\UjiController::class, 'normalize'])->name('uji.norm');
-    Route::get('/norm.uji', [App\Http\Controllers\UjiController::class, 'norm'])->name('norm');
+    // Route::get('/uji', [App\Http\Controllers\UjiController::class, 'index'])->name('uji.read');
+    // Route::get('/ujiadd', [App\Http\Controllers\UjiController::class, 'add'])->name('uji.add');
+    // Route::post('/ujinew', [App\Http\Controllers\UjiController::class, 'new'])->name('uji.new');
+    // Route::get('/ujidelete/{id}', [App\Http\Controllers\UjiController::class, 'delete'])->name('uji.delete');
+    // Route::get('/ujikosong', [App\Http\Controllers\UjiController::class, 'kosong'])->name('uji.kosong');
+    // // Route::get('/ujidata', [App\Http\Controllers\UjiController::class, 'data'])->name('uji.data');
+    // Route::post('/ujiimport', [App\Http\Controllers\UjiController::class, 'import'])->name('uji.import');
+    // Route::post('/ujinorm', [App\Http\Controllers\UjiController::class, 'normalize'])->name('uji.norm');
+    // Route::get('/norm.uji', [App\Http\Controllers\UjiController::class, 'norm'])->name('norm');
 
-    Route::get('/uji.get', [App\Http\Controllers\UjiController::class, 'get_arr'])->name('uji.get');
+    // Route::get('/uji.get', [App\Http\Controllers\UjiController::class, 'get_arr'])->name('uji.get');
 
     //admin
     Route::get('/profil/{id}', [App\Http\Controllers\DasboardController::class, 'profil'])->name('profil');

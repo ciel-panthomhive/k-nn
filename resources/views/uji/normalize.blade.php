@@ -1,5 +1,6 @@
-@extends('layouts.component.sidebar1')
+{{-- @extends('layouts.component.sidebar1') --}}
 {{-- @extends('admin.isi') --}}
+@extends('layouts.public')
 
 @section('content')
     {{-- <div style="margin-left:20%; padding:1px 16px;height:1000px;"> --}}

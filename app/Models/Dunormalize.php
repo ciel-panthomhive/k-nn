@@ -11,10 +11,10 @@ class Dunormalize extends Model
 
     protected $table = 'dunormalize';
 
-    protected $fillable = ['pid_u', 'nram', 'ninternal', 'nbaterai', 'nkam_depan', 'nkam_belakang', 'nharga'];
+    protected $fillable = ['id', 'nram', 'ninternal', 'nbaterai', 'nkam_depan', 'nkam_belakang', 'nharga'];
 
     public function datauji()
     {
-        return $this->belongsTo(Datauji::class, 'pid_u', 'id');
+        return $this->belongsTo(Datauji::class, 'id', 'id');
     }
 }

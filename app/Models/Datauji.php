@@ -15,7 +15,7 @@ class Datauji extends Model
 
     public function dunormalize()
     {
-        return $this->hasOne(Dunormalize::class, 'pid_u', 'id');
+        return $this->hasOne(Dunormalize::class, 'id', 'id');
     }
 
     public function kelas()

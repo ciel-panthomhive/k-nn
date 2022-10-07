@@ -13,16 +13,15 @@ class SearchController extends Controller
 {
     public function search(Request $request)
     {
-        Datauji::truncate();
+        // Datauji::truncate();
         $kelas = Kelas::all();
         $tes_train = Datatest::with('kelas');
         $test_uji = Datauji::with('kelas');
-        $uji = Datauji::all();
         $train = Datatest::all();
         $unorm = Dunormalize::all();
         $tnorm = Dtnormalize::all();
         $k = 5;
-
+        // $id = $this->id;
         //fungsi masukkan data ke tabel data uji
         $this->validate($request, [
             'ram_u' => 'required|numeric',
@@ -33,7 +32,7 @@ class SearchController extends Controller
             // 'kid_u' => 'required',
         ]);
 
-        Datauji::create([
+        $du = Datauji::create([
             'ram_u' => $request->ram_u,
             'internal_u' => $request->internal_u,
             'baterai_u' => $request->baterai_u,
@@ -41,11 +40,17 @@ class SearchController extends Controller
             'kam_belakang_u' => $request->kam_belakang_u,
             // 'kid_u' => $request->kid_u,
         ]);
-
+        // dd($du->id);
         //normalisasi data uji
+
+        // if ($du) {
+        //     return redirect()->route('uji.read')->with(['success' => 'Data berhasil ditambahkan!']);
+        // } else {
+        //     return redirect()->route('uji.read')->with(['error' => 'Data gagal ditambahkan!']);
+        // }
         Dunormalize::truncate(); //kosongkan tabel dunormalize
 
-        //min max
+        // min max
         $max_ram = Datatest::max('ram'); //cari nilai max pada tabel datatest(tabel untuk data training) kolom ram
         $min_ram = Datatest::min('ram'); //cari nilai min pada tabel datatest(tabel untuk data training) kolom ram
 
@@ -66,57 +71,162 @@ class SearchController extends Controller
 
 
         // $baris = Datauji::count();
+        $id = $du->id;
+        // Datauji::find($id);
+
+        // dd($id);
 
 
-        for ($i = 0; $i < count($uji); $i++) {
+        // for ($i = 0; $i < count($uji); $i++) {
 
-            $pid = $uji[$i]->id;
-            $ram  =  (($uji[$i]->ram_u - $min_ram) / ($max_ram - $min_ram));
-            $internal  =  (($uji[$i]->internal_u - $min_inter) / ($max_inter - $min_inter));
-            $baterai  =  (($uji[$i]->baterai_u - $min_baterai) / ($max_baterai - $min_baterai));
-            $kam_depan  =  (($uji[$i]->kam_depan_u - $min_depan) / ($max_depan - $min_depan));
-            $kam_belakang  =  (($uji[$i]->kam_belakang_u - $min_belakang) / ($max_belakang - $min_belakang));
+        // $pid = $du->id;
+        $ram  =  (($du->ram_u - $min_ram) / ($max_ram - $min_ram));
+        $internal  =  (($du->internal_u - $min_inter) / ($max_inter - $min_inter));
+        $baterai  =  (($du->baterai_u - $min_baterai) / ($max_baterai - $min_baterai));
+        $kam_depan  =  (($du->kam_depan_u - $min_depan) / ($max_depan - $min_depan));
+        $kam_belakang  =  (($du->kam_belakang_u - $min_belakang) / ($max_belakang - $min_belakang));
 
-            //pengisian tabel dunormalize
-            $isi = Dunormalize::create([
-                'pid_u' => $pid,
-                'nram' => $ram,
-                'ninternal' => $internal,
-                'nbaterai' => $baterai,
-                'nkam_depan' => $kam_depan,
-                'nkam_belakang' => $kam_belakang,
-                // 'nharga' => $harga,
-            ]);
-        }
+        // dd($ram);
+        //pengisian tabel dunormalize
+        $isi = Dunormalize::create([
+            'id' => $id,
+            'nram' => $ram,
+            'ninternal' => $internal,
+            'nbaterai' => $baterai,
+            'nkam_depan' => $kam_depan,
+            'nkam_belakang' => $kam_belakang,
+            // 'nharga' => $harga,
+        ]);
+        // }
+        // dd($isi);
+
 
         //proses knn
         //perhitungan euclid
-        $DISTANCES = array(); //deklarasi variablel dalam bentuk array, aku gatau ini bisa dipake apa nggak
-        for ($j = 0; $j < count($tnorm); $j++) { //perulangan berdasarkan tabel datatest
-            $dist['distances'] = $this->distance($isi, $tnorm[$j]); //$dist kayanya variabel baru, 'distance' kayanya dari private function dibawah, tapi karena dia di bawah aku gatau bakal bisa dipanggil disini ato nggak
-            $dist['nname'] = $tnorm[$j]['nname']; //$dist name berisi kolom 'name' dari data test, aku gatau kenapa kudu name, atau mungkin bisa diganti yg lain, bisa aja karena name gabisa dihitung
-            $dist['nklas'] = $tnorm[$j]['nklas']; // aku juga gatau apa ini harus pake id kelas dengan alasan yang sama juga
+        $DISTANCES = array();
+        for ($j = 0; $j < count($tnorm); $j++) {
+            $dist['distances'] = $this->distance1($isi, $tnorm[$j]);
+            $dist['pid'] = $tnorm[$j]['pid'];
+            $dist['nklas'] = $tnorm[$j]['nklas'];
 
             array_push($DISTANCES, $dist); //mengisi array distance dengan data dari $dist
         }
 
+        // var_dump($DISTANCES);
         //mengurutkan distance dari terdekat
-        sort($DISTANCES);
+        sort($DISTANCES); //->dia bernilai true, butuh penjelasan
+        // dd($DISTANCES);
+
+        //memetakan tetangga (belom di coba!!)
+        $NEIGHBOUR = array();
+        for ($i = 0; $i < $k; $i++) {
+            if (!isset($NEIGHBOUR[$DISTANCES[$i]['nklas']])) //memastikan nilai variabel/mengecek null atau tidak
+                $NEIGHBOUR[$DISTANCES[$i]['nklas']] = array(); //membentuk variabel menjadi array
+
+            array_push($NEIGHBOUR[$DISTANCES[$i]['nklas']], $DISTANCES[$i]); // isi nilai neighbor berupa id dan nklas berdasarkan nilai $distance ke $i
+        }
+
+        // dd($NEIGHBOUR);
+
+        //mencari tetangga terbanyak (klasifikasi!!)
+        $terbesar =  array();
+        foreach (array_keys($NEIGHBOUR) as $paramName) { //array_keys adalah nklas seperti pada neighbour, yg disebut hanya nklas
+
+            if (count($NEIGHBOUR[$paramName])  > count($terbesar)) { //hitung neighbor jengan jumlah nklas terbanyak
+                $terbesar = $NEIGHBOUR[$paramName]; //hasil dari klasifikasi
+            }
+        }
+
+        // dd($terbesar);
+
+        //update tabel datauji bagian klasifikasi
+        //$data_uji[$i]['data_label'] = $terbesar[0]['data_label']; //update nilai label (lulus / tidak lulus), tolong dikaji lagi karena cara update mungkin beda
+
+        $uji = Datauji::find($id);
+        // dd($uji);
+        $nklas = $terbesar[0]['nklas'];
+        // dd($nklas);
+        $uji->kid_u = trim($nklas);
+
+        // dd($uji->nklas);
+        $uji->save();
+        // dd($uji);
+
+        // $pidu = $isi->pid_u;
+        $ujinorm = Dunormalize::find($id);
+
+        // dd($ujinorm);
+        //normalisasi kelas datauji
+        $avg = 0;
+        if ($uji->kid_u == 1) {
+            $avg = Datatest::where('kid', 1)->avg('harga');
+        } elseif ($uji->kid_u == 2) {
+            $avg = Datatest::where('kid', 2)->avg('harga');
+        } elseif ($uji->kid_u == 3) {
+            $avg = Datatest::where('kid', 3)->avg('harga');
+        };
+
+        // var_dump($avg);
+
+        $harga  =  (($avg - $min_harga) / ($max_harga - $min_harga));
+
+
+        $ujinorm->nharga = trim($harga);
+        // dd($ujinorm->nharga);
+
+        $ujinorm->save();
+        // dd($ujinorm);
+
+
+        //-------------PAHAMI BAGIAN INI!!!------------
+        //knn sistem rekomendasi
+        //rumus euclid
+        $DISTANCES2 = array();
+        for ($j = 0; $j < count($tnorm); $j++) {
+            $dist2['distances'] = $this->distance2($ujinorm, $tnorm[$j]);
+            $dist2['pid'] = $tnorm[$j]['pid'];
+            $dist2['nklas'] = $tnorm[$j]['nklas'];
+
+            array_push($DISTANCES2, $dist2); //mengisi array distance dengan data dari $dist
+        }
+
+        // var_dump($DISTANCES2);
+        //mengurutkan distance dari terdekat
+        sort($DISTANCES2); //->dia bernilai true, butuh penjelasan
+        // dd($DISTANCES2);
+
+        //memetakan tetangga (belom di coba!!)
+        $NEIGHBOUR2 = array();
+        for ($q = 0; $q < $k; $q++) {
+            if (!isset($NEIGHBOUR2[$DISTANCES2[$q]['nklas']])) //memastikan nilai variabel/mengecek null atau tidak
+                $NEIGHBOUR2[$DISTANCES2[$q]['nklas']] = array(); //membentuk variabel menjadi array
+
+            array_push($NEIGHBOUR2[$DISTANCES2[$i]['nklas']], $DISTANCES2[$q]); // isi nilai neighbor berupa id dan nklas berdasarkan nilai $distance ke $i
+        }
+
+        // dd($NEIGHBOUR2);
 
 
 
-
-
-
-
-        $hasil = Datatest::with('kelas');
-
-
-
-        return view('hasil', ['hasil' => $hasil]);
+        // return view('hasil', ['hasil' => $hasil]);
     }
 
-    private function distance($uji, $test)
+
+    private function distance1($uji, $test)
+    {
+        $attrs = array(
+            // 'data_semester', 'data_IPK', 'data_gaji_ortu', 'data_UKT', 'data_tanggungan'
+            'nram', 'ninternal', 'nbaterai', 'nkam_depan', 'nkam_belakang' //atribut dari tabel dtnormalize dan dunormalize
+        );
+        $value = 0; //deklarasi nilai value, akan di update berdasarkan nilai value dibawah
+        foreach ($attrs as $attr) {
+            //value = jumlah (atribut kolom datauji - atribut kolom datatest)^2
+            $value += pow(($uji[$attr] - $test[$attr]), 2);
+        }
+        return round(sqrt($value), 6); // value = jumlah value diatas diakar, dibulatkan menjadi maksimal 6 angka dibelakang koma)
+    }
+
+    private function distance2($uji, $test)
     {
         $attrs = array(
             // 'data_semester', 'data_IPK', 'data_gaji_ortu', 'data_UKT', 'data_tanggungan'
