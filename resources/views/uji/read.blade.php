@@ -1,23 +1,23 @@
-{{-- @extends('layouts.component.sidebar1') --}}
+@extends('layouts.component.sidebar1')
 {{-- @extends('admin.isi') --}}
-@extends('layouts.public')
+{{-- @extends('layouts.public') --}}
 
 @section('content')
     {{-- <div style="margin-left:20%; padding:1px 16px;height:1000px;"> --}}
 
     <br>
     <br>
-    <a href="{{ route('uji.add') }}" class="btn btn-success" style="float:left; width: 150px">Tambah Data</a>
+    {{-- <a href="{{ route('uji.add') }}" class="btn btn-success" style="float:left; width: 150px">Tambah Data</a> --}}
     <a href="{{ route('uji.kosong') }}" class="btn btn-danger" style="margin-left: 20px; width: 150px">Kosongkan Data</a>
     {{-- <a href="#" class="btn btn-primary" style="margin-left: 20px; width: 150px">Import Data</a> --}}
 
     <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary" style="margin-left: 20px; width: 150px" data-bs-toggle="modal"
-        data-bs-target="#exampleModal">Import Data</button>
+    {{-- <button type="button" class="btn btn-primary" style="margin-left: 20px; width: 150px" data-bs-toggle="modal"
+        data-bs-target="#exampleModal">Import Data</button> --}}
 
     {{-- <a href="#" class="btn btn-warning" style="margin-left: 20px; width: 150px">Normalisasi Data</a> --}}
-    <button type="button" class="btn btn-warning" style="margin-left: 20px; width: 150px" data-bs-toggle="modal"
-        data-bs-target="#normModal">Normalisasi Data</button>
+    {{-- <button type="button" class="btn btn-warning" style="margin-left: 20px; width: 150px" data-bs-toggle="modal"
+        data-bs-target="#normModal">Normalisasi Data</button> --}}
 
     <br>
     <br>

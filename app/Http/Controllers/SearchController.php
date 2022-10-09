@@ -6,6 +6,7 @@ use App\Models\Datatest;
 use App\Models\Datauji;
 use App\Models\Dtnormalize;
 use App\Models\Dunormalize;
+use App\Models\Hasil;
 use App\Models\Kelas;
 use Illuminate\Http\Request;
 
@@ -14,11 +15,11 @@ class SearchController extends Controller
     public function search(Request $request)
     {
         // Datauji::truncate();
-        $kelas = Kelas::all();
-        $tes_train = Datatest::with('kelas');
-        $test_uji = Datauji::with('kelas');
-        $train = Datatest::all();
-        $unorm = Dunormalize::all();
+        Hasil::truncate();
+        // $tes_train = Datatest::with('kelas');
+        // $test_uji = Datauji::with('kelas');
+        // $train = Datatest::all();
+        // $unorm = Dunormalize::all();
         $tnorm = Dtnormalize::all();
         $k = 5;
         // $id = $this->id;
@@ -198,14 +199,51 @@ class SearchController extends Controller
         //memetakan tetangga (belom di coba!!)
         $NEIGHBOUR2 = array();
         for ($q = 0; $q < $k; $q++) {
-            if (!isset($NEIGHBOUR2[$DISTANCES2[$q]['nklas']])) //memastikan nilai variabel/mengecek null atau tidak
-                $NEIGHBOUR2[$DISTANCES2[$q]['nklas']] = array(); //membentuk variabel menjadi array
+            if (!isset($NEIGHBOUR2[$DISTANCES2[$q]['pid']])) //memastikan nilai variabel/mengecek null atau tidak
+                $NEIGHBOUR2[$DISTANCES2[$q]['pid']] = array(); //membentuk variabel menjadi array
 
-            array_push($NEIGHBOUR2[$DISTANCES2[$i]['nklas']], $DISTANCES2[$q]); // isi nilai neighbor berupa id dan nklas berdasarkan nilai $distance ke $i
+            array_push($NEIGHBOUR2[$DISTANCES2[$q]['pid']], $DISTANCES2[$q]); // isi nilai neighbor berupa id dan nklas berdasarkan nilai $distance ke $i
         }
 
+        // echo ($NEIGHBOUR2[$q]);
+
+        // foreach ($NEIGHBOUR2 as $object) {
+        //     $arr[] =  (array) $object;
+        // }
+        // dd($arr[0]->pid);
+        // $hasil = (object)$NEIGHBOUR2;
+        // dd($hasil);
+
+        // $id_hasil = $NEIGHBOUR2->pid;
         // dd($NEIGHBOUR2);
 
+        foreach (array_keys($NEIGHBOUR2) as $param) { //array_keys adalah nklas seperti pada neighbour, yg disebut hanya nklas
+
+            $hasil = Hasil::create([
+                'id_hasil' => trim($param),
+                // 'nharga' => $harga,
+            ]);
+        }
+
+        if ($hasil) {
+            return redirect()->route('hasil')->with(['success' => 'Data hasil rekomendasi']);
+        } else {
+            return redirect()->route('dashboard')->with(['error' => 'Data gagal dimuat']);
+        }
+
+
+
+        // $key = array_keys($NEIGHBOUR2);
+        // $arr_key = (object)$key;
+
+        // dd($arr_key);
+
+        // for ($h = 0; $h < count($NEIGHBOUR2); $h++) {
+        //     $hasil = Hasil::create([
+        //         'id_hasil' => trim($arr_key),
+        //         // 'nharga' => $harga,
+        //     ]);
+        // }
 
 
         // return view('hasil', ['hasil' => $hasil]);
@@ -238,5 +276,12 @@ class SearchController extends Controller
             $value += pow(($uji[$attr] - $test[$attr]), 2);
         }
         return round(sqrt($value), 6); // value = jumlah value diatas diakar, dibulatkan menjadi maksimal 6 angka dibelakang koma)
+    }
+
+    public function hasil()
+    {
+        $hasil = Hasil::with('datatest')->get();
+
+        return view('hasil', ['hasil' => $hasil]);
     }
 }

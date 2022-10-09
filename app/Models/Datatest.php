@@ -22,4 +22,9 @@ class Datatest extends Model
     {
         return $this->belongsTo(Kelas::class, 'kid', 'id');
     }
+
+    public function hasil()
+    {
+        return $this->hasOne(Hasil::class, 'id_hasil', 'id');
+    }
 }

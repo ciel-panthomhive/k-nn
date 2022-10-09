@@ -19,6 +19,11 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <style>
+        div.padd1 {
+            padding: 100px;
+        }
+    </style>
 </head>
 
 <body>
