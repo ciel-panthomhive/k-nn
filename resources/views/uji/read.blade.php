@@ -9,6 +9,7 @@
     <br>
     {{-- <a href="{{ route('uji.add') }}" class="btn btn-success" style="float:left; width: 150px">Tambah Data</a> --}}
     <a href="{{ route('uji.kosong') }}" class="btn btn-danger" style="margin-left: 20px; width: 150px">Kosongkan Data</a>
+    {{-- <a href="{{ route('norm') }}" class="btn btn-danger" style="margin-left: 20px; width: 150px">Lihat Normalisasi</a> --}}
     {{-- <a href="#" class="btn btn-primary" style="margin-left: 20px; width: 150px">Import Data</a> --}}
 
     <!-- Button trigger modal -->
@@ -33,7 +34,7 @@
                 <th>Kamera Belakang</th>
                 <th>Klasifikasi</th>
                 {{-- <th>Klasifikasi</th> --}}
-                <th>Action</th>
+                {{-- <th>Action</th> --}}
             </tr>
         </thead>
         <tbody>
@@ -52,10 +53,10 @@
                             {{ $t->kelas->klas }}
                         @endisset
                     </td>
-                    <td>
+                    {{-- <td>
                         <a href="{{ route('uji.delete', ['id' => $t->id]) }}" class="btn btn-danger"><i
                                 class='bx bx-trash nav_icon'></i></a>
-                    </td>
+                    </td> --}}
                 </tr>
             @endforeach
         </tbody>
@@ -63,7 +64,7 @@
     </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    {{-- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -81,9 +82,9 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
-    <form method="post" action="{{ route('uji.norm') }}" enctype="multipart/form-data">
+    {{-- <form method="post" action="{{ route('uji.norm') }}" enctype="multipart/form-data">
         @csrf
         <div class="modal fade" id="normModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -94,17 +95,17 @@
                     </div>
                     <div class="modal-body">
                         <div class="mb-3">
-                            <label for="formFile" class="form-label">Apakah anda ingin melakukan normalisasi?</label>
-                            {{-- <input class="form-control" type="file" id="formFile"> --}}
-                        </div>
+                            <label for="formFile" class="form-label">Apakah anda ingin melakukan normalisasi?</label> --}}
+    {{-- <input class="form-control" type="file" id="formFile"> --}}
+    {{-- </div>
                     </div>
-                    <div class="modal-footer">
-                        {{-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button> --}}
-                        {{-- <button type="button" class="btn btn-primary">Normalisasi</button> --}}
-                        <input type="submit" class="btn btn-success" value="Normalisasi">
+                    <div class="modal-footer"> --}}
+    {{-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button> --}}
+    {{-- <button type="button" class="btn btn-primary">Normalisasi</button> --}}
+    {{-- <input type="submit" class="btn btn-success" value="Normalisasi">
                     </div>
                 </div>
             </div>
         </div>
-    </form>
+    </form> --}}
 @endsection
