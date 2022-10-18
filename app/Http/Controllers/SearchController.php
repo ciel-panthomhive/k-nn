@@ -49,7 +49,7 @@ class SearchController extends Controller
         // } else {
         //     return redirect()->route('uji.read')->with(['error' => 'Data gagal ditambahkan!']);
         // }
-        Dunormalize::truncate(); //kosongkan tabel dunormalize
+        // Dunormalize::truncate(); //kosongkan tabel dunormalize
 
         // min max
         $max_ram = Datatest::max('ram'); //cari nilai max pada tabel datatest(tabel untuk data training) kolom ram
