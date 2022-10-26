@@ -27,4 +27,14 @@ class Kelas extends Model
     {
         return $this->hasMany(Dtnormalize::class, 'nklas', 'id');
     }
+
+    public function uji1()
+    {
+        return $this->hasMany(Uji::class, 'kid', 'id');
+    }
+
+    public function uji2()
+    {
+        return $this->hasMany(Uji::class, 'klasifikasi', 'id');
+    }
 }

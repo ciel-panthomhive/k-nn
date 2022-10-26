@@ -95,23 +95,18 @@
 
                         </div>
 
-                        {{-- <div class="col">
-                            <label>Kelas Smartphone</label>
-                            <select class="form-control select2-single" name="kid">
-                                @forelse ($kelas as $k)
-                                    <option value="{{ $k->id }}">{{ $k->klas }} </option>
-                                @empty
-                                    <option value=""> </option>
-                                @endforelse
-                            </select>
+                        <div class="col">
+                            <label>Harga</label>
+                            <input type="text" name="harga_u" class="form-control"
+                                placeholder="Harga smartphone yang diinginkan">
 
-                            @if ($errors->has('klasifikasi'))
+                            @if ($errors->has('harga_u'))
                                 <div class="text-danger">
-                                    {{ $errors->first('klasifikasi') }}
+                                    {{ $errors->first('harga_u') }}
                                 </div>
                             @endif
 
-                        </div> --}}
+                        </div>
                     </div>
 
                     <br />

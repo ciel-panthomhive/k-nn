@@ -27,4 +27,9 @@ class Datatest extends Model
     {
         return $this->hasOne(Hasil::class, 'id_hasil', 'id');
     }
+
+    public function uji()
+    {
+        return $this->hasOne(Uji::class, 'id', 'id');
+    }
 }

@@ -21,7 +21,7 @@ class CreateDataujiTable extends Migration
             $table->integer('baterai_u');
             $table->float('kam_depan_u');
             $table->float('kam_belakang_u');
-            // $table->integer('harga_u');
+            $table->integer('harga_u');
             // $table->integer('harga_max_u');
             $table->unsignedBigInteger('kid_u')->nullable();
             $table->timestamps();

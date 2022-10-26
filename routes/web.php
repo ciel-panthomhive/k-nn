@@ -44,6 +44,11 @@ Route::group(['middleware' => ['web', 'auth']], function () {
     Route::post('/testnorm', [App\Http\Controllers\TestingController::class, 'normalize'])->name('test.norm');
     Route::get('/norm.test', [App\Http\Controllers\TestingController::class, 'norm'])->name('normalisasi');
 
+    //pengujian modal
+    Route::post('/pengujian', [App\Http\Controllers\PengujianController::class, 'pengujian'])->name('modal.norm');
+    Route::get('/pengujian.test', [App\Http\Controllers\PengujianController::class, 'uji'])->name('modal');
+    Route::get('/penguji.norm', [App\Http\Controllers\PengujianController::class, 'norm'])->name('penguji.norm');
+
     //data uji
     Route::get('/uji', [App\Http\Controllers\UjiController::class, 'index'])->name('uji.read');
     // Route::get('/ujiadd', [App\Http\Controllers\UjiController::class, 'add'])->name('uji.add');
