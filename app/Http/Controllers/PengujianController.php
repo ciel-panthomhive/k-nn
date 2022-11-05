@@ -10,6 +10,7 @@ use GuzzleHttp\Promise\Create;
 use Illuminate\Http\Request;
 use Illuminate\Queue\Events\Looping;
 use Illuminate\Support\Facades\DB;
+use Symfony\Component\Finder\Iterator\SortableIterator;
 
 class PengujianController extends Controller
 {
@@ -31,9 +32,12 @@ class PengujianController extends Controller
         // $datatest = $data->toArray();
 
         // shuffle($datatest);
-
         $datatest = array();
         for ($j = 0; $j < count($test); $j++) {
+            // dd($test[$j]['id']);
+            // dd($datatest[$test[$j]]);
+            // if (!isset($datatest[$test[$j]['id']]))
+            //     $datatest[$test[$j]['id']] = array();
             // $shuffle['id'] = $loop->iteration;
             $shuffle['id'] = $test[$j]['id'];
             $shuffle['name'] = $test[$j]['name'];
@@ -47,19 +51,28 @@ class PengujianController extends Controller
 
             array_push($datatest, $shuffle);
         }
+        // for ($a = 0; $a < 50; $a++) {
+        //     var_dump($datatest[$a]);
+        // }
+
         shuffle($datatest); //mengacak datatest
 
-        // dd($datatest);
+        // $result = shuffle($datatest);
+        // print_r($result);
 
         $det = array(); //mengambil 20 datatest/train
         for ($q = 0; $q < 20; $q++) {
-            if (!isset($det[$datatest[$q]['id']]))
-                $det[$datatest[$q]['id']] = array();
+            $datatest[$q];
+            // if (!isset($det[$datatest[$q]['id']]))
+            //     $det[$datatest[$q]['id']] = array();
 
-            array_push($det[$datatest[$q]['id']], $datatest[$q]);
+            // array_push($det[$datatest[$q]['id']], $datatest[$q]);
+            array_push($det, $datatest[$q]);
         }
+        // var_dump($det);
 
-        asort($det);
+        sort($det);
+
         // dd($det);
 
         // var_dump($det);
@@ -68,7 +81,7 @@ class PengujianController extends Controller
         foreach (array_keys($det) as $param) {
             // dd($datatest[$param]);
             $ass = Uji::create([
-                'id' => trim($param),
+                'id' => trim($datatest[$param]['id']),
                 'name' => trim($datatest[$param]['name']),
                 'ram' => trim($datatest[$param]['ram']),
                 'internal' => trim($datatest[$param]['internal']),
@@ -103,8 +116,8 @@ class PengujianController extends Controller
         $max_belakang = Datatest::max('kam_belakang');
         $min_belakang = Datatest::min('kam_belakang');
 
-        $max_harga = Datatest::max('harga');
-        $min_harga = Datatest::min('harga');
+        // $max_harga = Datatest::max('harga');
+        // $min_harga = Datatest::min('harga');
 
         for ($s = 0; $s < count($tabeluji); $s++) {
             $pid = $tabeluji[$s]->id;
@@ -114,9 +127,10 @@ class PengujianController extends Controller
             $baterai  =  (($tabeluji[$s]->baterai - $min_baterai) / ($max_baterai - $min_baterai));
             $kam_depan  =  (($tabeluji[$s]->kam_depan - $min_depan) / ($max_depan - $min_depan));
             $kam_belakang  =  (($tabeluji[$s]->kam_belakang - $min_belakang) / ($max_belakang - $min_belakang));
-            $harga  =  (($tabeluji[$s]->harga - $min_harga) / ($max_harga - $min_harga));
+            // $harga  =  (($tabeluji[$s]->harga - $min_harga) / ($max_harga - $min_harga));
+            $harga = ($tabeluji[$s]->harga);
             // $klas = $tabeluji[$s]->kid;
-
+            // dd($harga);
             // dd($pid);
 
 
@@ -145,10 +159,11 @@ class PengujianController extends Controller
                 $dist['id'] = $data_train[$k]['id'];
                 $dist['nklas'] = $data_train[$k]['nklas'];
                 // echo json_encode( $dist ).'<br>' ;
-
                 array_push($DISTANCES, $dist);
             }
             sort($DISTANCES);
+
+            // dd($DISTANCES);
 
             //memetakan tetangga
             $NEIGHBOUR = array();
@@ -170,6 +185,7 @@ class PengujianController extends Controller
 
             // dd($terbesar);
             $klasifikasi = $terbesar[0]['nklas'];
+
             // dd($klasifikasi);
             // var_dump($klasifikasi);
             // dd($ujidata[$i]->id);
@@ -177,7 +193,18 @@ class PengujianController extends Controller
             $penguji = Uji::find($id);
 
             // dd($penguji);
-            $penguji->klasifikasi = trim($klasifikasi);
+            $klasi = 0;
+            if ($klasifikasi == 0) {
+                $klasi = 1;
+            } elseif ($klasifikasi > 0 && $klasifikasi < 1) {
+                $klasi = 2;
+            } elseif ($klasifikasi == 1) {
+                $klasi = 3;
+            }
+
+            // dd($klasi);
+            $penguji->klasifikasi = trim($klasi);
+
             // var_dump($penguji->klasifikasi);
             // var_dump($ujidata);
             // dd($uji->nklas);
@@ -196,7 +223,7 @@ class PengujianController extends Controller
     private function distance($uji, $test)
     {
         $attrs = array(
-            'nram', 'ninternal', 'nbaterai', 'nkam_depan', 'nkam_belakang', 'nharga' //atribut dari tabel dtnormalize dan dunormalize
+            'nram', 'ninternal', 'nbaterai', 'nkam_depan', 'nkam_belakang' //atribut dari tabel dtnormalize dan dunormalize
         );
         $value = 0; //deklarasi nilai value, akan di update berdasarkan nilai value dibawah
         foreach ($attrs as $attr) {

@@ -21,7 +21,7 @@ class CreateUjinormTable extends Migration
             $table->float('ninternal');
             $table->float('nkam_depan');
             $table->float('nkam_belakang');
-            $table->float('nharga')->nullable();
+            $table->integer('nharga')->nullable();
             $table->timestamps();
         });
     }

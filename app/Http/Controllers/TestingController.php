@@ -204,8 +204,11 @@ class TestingController extends Controller
         $max_belakang = Datatest::max('kam_belakang');
         $min_belakang = Datatest::min('kam_belakang');
 
-        $max_harga = Datatest::max('harga');
-        $min_harga = Datatest::min('harga');
+        // $max_harga = Datatest::max('harga');
+        // $min_harga = Datatest::min('harga');
+
+        $max_kid = Datatest::max('kid');
+        $min_kid = Datatest::min('kid');
 
         $baris = Datatest::count();
 
@@ -232,8 +235,10 @@ class TestingController extends Controller
             $baterai  =  (($train[$i]->baterai - $min_baterai) / ($max_baterai - $min_baterai));
             $kam_depan  =  (($train[$i]->kam_depan - $min_depan) / ($max_depan - $min_depan));
             $kam_belakang  =  (($train[$i]->kam_belakang - $min_belakang) / ($max_belakang - $min_belakang));
-            $harga  =  (($train[$i]->harga - $min_harga) / ($max_harga - $min_harga));
-            $klas = $train[$i]->kid;
+            // $harga  =  (($train[$i]->harga - $min_harga) / ($max_harga - $min_harga));
+            // $klas = $train[$i]->kid;
+            $harga = $train[$i]->harga;
+            $klas = (($train[$i]->kid - $min_kid) / ($max_kid - $min_kid));
 
             // dd($pid);
 

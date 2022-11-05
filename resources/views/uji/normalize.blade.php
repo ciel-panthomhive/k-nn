@@ -18,7 +18,7 @@
                 <th>Baterai</th>
                 <th>Kamera Depan</th>
                 <th>Kamera Belakang</th>
-                <th>Harga</th>
+                {{-- <th>Harga</th> --}}
                 {{-- <th>Klasifikasi</th>
                 <th>Action</th> --}}
             </tr>
@@ -33,7 +33,7 @@
                     <td>{{ $t->nbaterai }}</td>
                     <td>{{ $t->nkam_depan }}</td>
                     <td>{{ $t->nkam_belakang }}</td>
-                    <td>{{ $t->nharga }}</td>
+                    {{-- <td>{{ $t->nharga }}</td> --}}
                 </tr>
             @endforeach
         </tbody>

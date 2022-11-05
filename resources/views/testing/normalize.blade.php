@@ -32,11 +32,12 @@
                     <td>{{ $t->nkam_belakang }}</td>
                     <td>{{ $t->nharga }}</td>
                     {{-- <td>{{ $t->datatest->name }}</td> --}}
-                    <td>
+                    {{-- <td>
                         @isset($t->datatest->kelas)
                             {{ $t->datatest->kelas->klas }}
                         @endisset
-                    </td>
+                    </td> --}}
+                    <td>{{ $t->nklas }}</td>
                 </tr>
             @endforeach
         </tbody>

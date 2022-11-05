@@ -2,13 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Carinorm;
 use App\Models\Datatest;
 use App\Models\Datauji;
 use App\Models\Dtnormalize;
 use App\Models\Dunormalize;
 use App\Models\Hasil;
 use App\Models\Kelas;
+use App\Models\Pencarian;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use PhpParser\Node\Stmt\ElseIf_;
 
 class SearchController extends Controller
 {
@@ -24,24 +28,33 @@ class SearchController extends Controller
         $k = 5;
         // $id = $this->id;
         //fungsi masukkan data ke tabel data uji
-        $this->validate($request, [
-            'ram_u' => 'required|numeric',
-            'internal_u' => 'required|numeric',
-            'baterai_u' => 'required|numeric',
-            'kam_depan_u' => 'required|numeric',
-            'kam_belakang_u' => 'required|numeric',
-            // 'kid_u' => 'required',
-        ]);
+        // $this->validate($request, [
+        //     'ram_u' => 'numeric',
+        //     'internal_u' => 'numeric',
+        //     'baterai_u' => 'numeric',
+        //     'kam_depan_u' => 'numeric',
+        //     'kam_belakang_u' => 'numeric',
+        //     'harga_u' => 'numeric',
+        //     // 'kid_u' => 'required',
+        // ]);
 
-        $du = Datauji::create([
+        $du = Pencarian::create([
             'ram_u' => $request->ram_u,
             'internal_u' => $request->internal_u,
             'baterai_u' => $request->baterai_u,
             'kam_depan_u' => $request->kam_depan_u,
             'kam_belakang_u' => $request->kam_belakang_u,
+            'harga_u' => $request->harga_u,
             // 'kid_u' => $request->kid_u,
         ]);
-        // dd($du->id);
+        // dd($du->ram_u);
+        $id = $du->id;
+        $ram_u = $du->ram_u;
+        $internal_u = $du->internal_u;
+        $baterai_u = $du->baterai_u;
+        $kam_depan_u = $du->kam_depan_u;
+        $kam_belakang_u = $du->kam_belakang_u;
+        $harga_u = $du->harga_u;
         //normalisasi data uji
 
         // if ($du) {
@@ -67,12 +80,15 @@ class SearchController extends Controller
         $max_belakang = Datatest::max('kam_belakang');
         $min_belakang = Datatest::min('kam_belakang');
 
-        $max_harga = Datatest::max('harga');
-        $min_harga = Datatest::min('harga');
+        // $max_harga = Datatest::max('harga');
+        // $min_harga = Datatest::min('harga');
+
+        $max_kid = Datatest::max('kid');
+        $min_kid = Datatest::min('kid');
 
 
         // $baris = Datauji::count();
-        $id = $du->id;
+        // $id = $du->id;
         // Datauji::find($id);
 
         // dd($id);
@@ -81,22 +97,45 @@ class SearchController extends Controller
         // for ($i = 0; $i < count($uji); $i++) {
 
         // $pid = $du->id;
-        $ram  =  (($du->ram_u - $min_ram) / ($max_ram - $min_ram));
-        $internal  =  (($du->internal_u - $min_inter) / ($max_inter - $min_inter));
-        $baterai  =  (($du->baterai_u - $min_baterai) / ($max_baterai - $min_baterai));
-        $kam_depan  =  (($du->kam_depan_u - $min_depan) / ($max_depan - $min_depan));
-        $kam_belakang  =  (($du->kam_belakang_u - $min_belakang) / ($max_belakang - $min_belakang));
+        // dd($du->ram_u);
+        $ram = null;
+        $internal = null;
+        $baterai = null;
+        $kam_depan  = null;
+        $kam_belakang  = null;
+        $harga = null;
+        $kelas = null;
+        // dd($du->ram_u);
+        if ($ram_u) {
+            // dd($ram  =  (($ram_u - $min_ram) / ($max_ram - $min_ram)));
+            $ram  =  (($ram_u - $min_ram) / ($max_ram - $min_ram));
+        }
+        if ($internal_u) {
+            $internal  =  (($internal_u - $min_inter) / ($max_inter - $min_inter));
+        }
+        if ($baterai_u) {
+            $baterai  =  (($baterai_u - $min_baterai) / ($max_baterai - $min_baterai));
+        }
+        if ($kam_depan_u) {
+            $kam_depan  =  (($kam_depan_u - $min_depan) / ($max_depan - $min_depan));
+        }
+        if ($kam_depan_u) {
+            $kam_belakang  =  (($kam_belakang_u - $min_belakang) / ($max_belakang - $min_belakang));
+        }
+        if ($harga_u) {
+            $harga = $harga_u;
+        }
 
         // dd($ram);
         //pengisian tabel dunormalize
-        $isi = Dunormalize::create([
+        $isi = Carinorm::create([
             'id' => $id,
             'nram' => $ram,
             'ninternal' => $internal,
             'nbaterai' => $baterai,
             'nkam_depan' => $kam_depan,
             'nkam_belakang' => $kam_belakang,
-            // 'nharga' => $harga,
+            'nharga' => $harga,
         ]);
         // }
         // dd($isi);
@@ -106,13 +145,13 @@ class SearchController extends Controller
         //perhitungan euclid
         $DISTANCES = array();
         for ($j = 0; $j < count($tnorm); $j++) {
-            $dist['distances'] = $this->distance1($isi, $tnorm[$j]);
+            $dist['distances'] = $this->distance($isi, $tnorm[$j], $ram, $internal, $baterai, $kam_depan, $kam_belakang, $harga, $kelas);
             $dist['pid'] = $tnorm[$j]['pid'];
             $dist['nklas'] = $tnorm[$j]['nklas'];
 
             array_push($DISTANCES, $dist); //mengisi array distance dengan data dari $dist
         }
-
+        // dd($DISTANCES);
         // var_dump($DISTANCES);
         //mengurutkan distance dari terdekat
         sort($DISTANCES); //->dia bernilai true, butuh penjelasan
@@ -143,40 +182,51 @@ class SearchController extends Controller
         //update tabel datauji bagian klasifikasi
         //$data_uji[$i]['data_label'] = $terbesar[0]['data_label']; //update nilai label (lulus / tidak lulus), tolong dikaji lagi karena cara update mungkin beda
 
-        $uji = Datauji::find($id);
+        $cari = Pencarian::find($id);
         // dd($uji);
         $nklas = $terbesar[0]['nklas'];
         // dd($nklas);
-        $uji->kid_u = trim($nklas);
+        // $klasi = 0;
+        if ($nklas == 0) {
+            $kelas = 1;
+        } elseif ($nklas > 0 && $nklas < 1) {
+            $kelas = 2;
+        } elseif ($nklas == 1) {
+            $kelas = 3;
+        }
+
+        // dd($klasi);
+        $cari->kid_u = trim($kelas);
 
         // dd($uji->nklas);
-        $uji->save();
+        $cari->save();
         // dd($uji);
 
         // $pidu = $isi->pid_u;
-        $ujinorm = Dunormalize::find($id);
+        $carinorm = Carinorm::find($id);
 
         // dd($ujinorm);
         //normalisasi kelas datauji
-        $avg = 0;
-        if ($uji->kid_u == 1) {
-            $avg = Datatest::where('kid', 1)->avg('harga');
-        } elseif ($uji->kid_u == 2) {
-            $avg = Datatest::where('kid', 2)->avg('harga');
-        } elseif ($uji->kid_u == 3) {
-            $avg = Datatest::where('kid', 3)->avg('harga');
-        };
+        // $avg = 0;
+        // if ($uji->kid_u == 1) {
+        //     $avg = Datatest::where('kid', 1)->avg('harga');
+        // } elseif ($uji->kid_u == 2) {
+        //     $avg = Datatest::where('kid', 2)->avg('harga');
+        // } elseif ($uji->kid_u == 3) {
+        //     $avg = Datatest::where('kid', 3)->avg('harga');
+        // };
 
         // var_dump($avg);
 
-        $harga  =  (($avg - $min_harga) / ($max_harga - $min_harga));
+        // $harga  =  (($avg - $min_harga) / ($max_harga - $min_harga));
+        // dd($uji->kid_u);
+        $kid = (($cari->kid_u - $min_kid) / ($max_kid - $min_kid));
 
-
-        $ujinorm->nharga = trim($harga);
+        $carinorm->nklas = trim($kid);
         // dd($ujinorm->nharga);
 
-        $ujinorm->save();
-        // dd($ujinorm);
+        $carinorm->save();
+        // dd($carinorm);
 
 
         //-------------PAHAMI BAGIAN INI!!!------------
@@ -184,10 +234,10 @@ class SearchController extends Controller
         //rumus euclid
         $DISTANCES2 = array();
         for ($j = 0; $j < count($tnorm); $j++) {
-            $dist2['distances'] = $this->distance2($ujinorm, $tnorm[$j]);
+            $dist2['distances'] = $this->distance($isi, $tnorm[$j], $ram, $internal, $baterai, $kam_depan, $kam_belakang, $harga, $kelas);
             $dist2['pid'] = $tnorm[$j]['pid'];
             $dist2['nklas'] = $tnorm[$j]['nklas'];
-
+            $dist2['harga'] = $tnorm[$j]['nharga'];
             array_push($DISTANCES2, $dist2); //mengisi array distance dengan data dari $dist
         }
 
@@ -195,67 +245,85 @@ class SearchController extends Controller
         //mengurutkan distance dari terdekat
         sort($DISTANCES2); //->dia bernilai true, butuh penjelasan
         // dd($DISTANCES2);
-
+        //-----------------------------------------------------------------------------------------------------------------------------------------------------------------//
         //memetakan tetangga (belom di coba!!)
-        $NEIGHBOUR2 = array();
-        for ($q = 0; $q < $k; $q++) {
-            if (!isset($NEIGHBOUR2[$DISTANCES2[$q]['pid']])) //memastikan nilai variabel/mengecek null atau tidak
-                $NEIGHBOUR2[$DISTANCES2[$q]['pid']] = array(); //membentuk variabel menjadi array
+        // $NEIGHBOUR2 = array();
+        // for ($q = 0; $q < $k; $q++) {
+        //     if (!isset($NEIGHBOUR2[$DISTANCES2[$q]['pid']])) //memastikan nilai variabel/mengecek null atau tidak
+        //         $NEIGHBOUR2[$DISTANCES2[$q]['pid']] = array(); //membentuk variabel menjadi array
 
-            array_push($NEIGHBOUR2[$DISTANCES2[$q]['pid']], $DISTANCES2[$q]); // isi nilai neighbor berupa id dan nklas berdasarkan nilai $distance ke $i
-        }
-
-        // echo ($NEIGHBOUR2[$q]);
-
-        // foreach ($NEIGHBOUR2 as $object) {
-        //     $arr[] =  (array) $object;
+        //     array_push($NEIGHBOUR2[$DISTANCES2[$q]['pid']], $DISTANCES2[$q]); // isi nilai neighbor berupa id dan nklas berdasarkan nilai $distance ke $i
         // }
-        // dd($arr[0]->pid);
-        // $hasil = (object)$NEIGHBOUR2;
-        // dd($hasil);
 
-        // $id_hasil = $NEIGHBOUR2->pid;
-        // dd($NEIGHBOUR2);
-
-        foreach (array_keys($NEIGHBOUR2) as $param) { //array_keys adalah nklas seperti pada neighbour, yg disebut hanya nklas
-
+        // foreach (array_keys($NEIGHBOUR2) as $param) { //array_keys adalah nklas seperti pada neighbour, yg disebut hanya nklas
+        foreach (array_keys($DISTANCES2) as $param) {
+            // dd($DISTANCES2[$param]['harga']);
             $hasil = Hasil::create([
-                'id_hasil' => trim($param),
-                // 'nharga' => $harga,
+                'id_hasil' => trim(($DISTANCES2[$param]['pid'])),
+                'harga' => trim(($DISTANCES2[$param]['harga'])),
             ]);
         }
 
-        if ($hasil) {
-            return redirect()->route('hasil')->with(['success' => 'Data hasil rekomendasi']);
+        // dd($harga);
+
+        if ($harga) {
+            // $hasil = Hasil::with('datatest')->get();
+            // $hasil = Hasil::with('datatest')
+            // ->where('harga', '<', $harga)
+            // ->get();
+            // dd($harga);
+
+            $hasil = Hasil::with('datatest')
+                ->where('harga', '<', $harga)
+                ->take(5)->get();
+
+            return view('hasil', ['hasil' => $hasil]);
         } else {
-            return redirect()->route('dashboard')->with(['error' => 'Data gagal dimuat']);
+            $hasil = Hasil::with('datatest')
+                ->take(5)
+                ->get();
+            return view('hasil', ['hasil' => $hasil]);
         }
 
-
-
-        // $key = array_keys($NEIGHBOUR2);
-        // $arr_key = (object)$key;
-
-        // dd($arr_key);
-
-        // for ($h = 0; $h < count($NEIGHBOUR2); $h++) {
-        //     $hasil = Hasil::create([
-        //         'id_hasil' => trim($arr_key),
-        //         // 'nharga' => $harga,
-        //     ]);
+        // if ($hasil) {
+        //     return redirect()->route('hasil', $harga)->with(['success' => 'Data hasil rekomendasi']);
+        // } else {
+        //     return redirect()->route('dashboard')->with(['error' => 'Data gagal dimuat']);
         // }
-
-
-        // return view('hasil', ['hasil' => $hasil]);
     }
 
 
-    private function distance1($uji, $test)
+    private function distance($uji, $test, $ram, $internal, $baterai, $kam_depan, $kam_belakang, $harga, $kelas)
     {
-        $attrs = array(
-            // 'data_semester', 'data_IPK', 'data_gaji_ortu', 'data_UKT', 'data_tanggungan'
-            'nram', 'ninternal', 'nbaterai', 'nkam_depan', 'nkam_belakang' //atribut dari tabel dtnormalize dan dunormalize
-        );
+        //example atrribut
+        $attrs = [];
+
+        if ($ram) {
+            $attrs[] = 'nram';
+        }
+        if ($internal) {
+            $attrs[] = 'ninternal';
+        }
+        if ($baterai) {
+            $attrs[] = 'nbaterai';
+        }
+        if ($kam_depan) {
+            $attrs[] = 'nkam_depan';
+        }
+        if ($kam_belakang) {
+            $attrs[] = 'nkam_belakang';
+        }
+        if ($harga) {
+            $attrs[] = 'nharga';
+        }
+        if ($kelas) {
+            $attrs[] = 'nklas';
+        }
+        // dd($attrs);
+        // $attrs = array(
+        //     // 'data_semester', 'data_IPK', 'data_gaji_ortu', 'data_UKT', 'data_tanggungan'
+        //     'nram', 'ninternal', 'nbaterai', 'nkam_depan', 'nkam_belakang' //atribut dari tabel dtnormalize dan dunormalize
+        // );
         $value = 0; //deklarasi nilai value, akan di update berdasarkan nilai value dibawah
         foreach ($attrs as $attr) {
             //value = jumlah (atribut kolom datauji - atribut kolom datatest)^2
@@ -264,22 +332,9 @@ class SearchController extends Controller
         return round(sqrt($value), 6); // value = jumlah value diatas diakar, dibulatkan menjadi maksimal 6 angka dibelakang koma)
     }
 
-    private function distance2($uji, $test)
+    public function hasil($id)
     {
-        $attrs = array(
-            // 'data_semester', 'data_IPK', 'data_gaji_ortu', 'data_UKT', 'data_tanggungan'
-            'nram', 'ninternal', 'nbaterai', 'nkam_depan', 'nkam_belakang', 'nharga' //atribut dari tabel dtnormalize dan dunormalize
-        );
-        $value = 0; //deklarasi nilai value, akan di update berdasarkan nilai value dibawah
-        foreach ($attrs as $attr) {
-            //value = jumlah (atribut kolom datauji - atribut kolom datatest)^2
-            $value += pow(($uji[$attr] - $test[$attr]), 2);
-        }
-        return round(sqrt($value), 6); // value = jumlah value diatas diakar, dibulatkan menjadi maksimal 6 angka dibelakang koma)
-    }
-
-    public function hasil()
-    {
+        $has = Hasil::find($id);
         $hasil = Hasil::with('datatest')->get();
 
         return view('hasil', ['hasil' => $hasil]);

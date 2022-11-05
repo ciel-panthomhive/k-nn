@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDataujiTable extends Migration
+class CreatePencarianTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateDataujiTable extends Migration
      */
     public function up()
     {
-        Schema::create('datauji', function (Blueprint $table) {
+        Schema::create('pencarian', function (Blueprint $table) {
             $table->id();
             //$table->string('nameu');
             $table->integer('ram_u')->nullable();
@@ -25,8 +25,6 @@ class CreateDataujiTable extends Migration
             // $table->integer('harga_max_u');
             $table->unsignedBigInteger('kid_u')->nullable();
             $table->timestamps();
-
-            // $table->foreign('kid_u')->references('id')->on('kelas')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
@@ -37,6 +35,6 @@ class CreateDataujiTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('datauji');
+        Schema::dropIfExists('pencarian');
     }
 }

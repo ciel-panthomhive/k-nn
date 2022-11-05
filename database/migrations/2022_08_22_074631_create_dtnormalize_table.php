@@ -21,7 +21,7 @@ class CreateDtnormalizeTable extends Migration
             $table->float('nbaterai');
             $table->float('nkam_depan');
             $table->float('nkam_belakang');
-            $table->float('nharga');
+            $table->integer('nharga');
             $table->float('nklas');
             $table->timestamps();
 

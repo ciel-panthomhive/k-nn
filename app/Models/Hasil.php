@@ -11,7 +11,7 @@ class Hasil extends Model
 
     protected $table = 'hasil';
 
-    protected $fillable = ['id', 'id_hasil'];
+    protected $fillable = ['id', 'id_hasil', 'harga'];
 
     public function datatest()
     {

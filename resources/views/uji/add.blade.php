@@ -95,7 +95,7 @@
 
                         </div>
 
-                        <div class="col">
+                        {{-- <div class="col">
                             <label>Klasifikasi Smartphone</label>
                             <select class="form-control select2-single" name="kid_u">
                                 @forelse ($kelas as $k)
@@ -111,7 +111,7 @@
                                 </div>
                             @endif
 
-                        </div>
+                        </div> --}}
 
                         {{-- <div class="col">
                             <label>Kelas</label>
@@ -130,7 +130,7 @@
                     <div class="form-group">
                         <input type="submit" class="btn btn-success" value="Tambah">
                         <a href="{{ route('uji.read') }}" class="btn btn-primary" style="float: right">Kembali</a>
-                        <a href="{{ route('uji.get') }}" class="btn btn-primary" style="float: right">Cek</a>
+                        {{-- <a href="{{ route('uji.get') }}" class="btn btn-primary" style="float: right">Cek</a> --}}
                     </div>
 
                 </form>

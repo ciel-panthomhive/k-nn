@@ -16,6 +16,7 @@ class CreateHasilTable extends Migration
         Schema::create('hasil', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('id_hasil');
+            $table->integer('harga');
             $table->timestamps();
         });
     }
