@@ -167,7 +167,7 @@ class PengujianController extends Controller
 
             //memetakan tetangga
             $NEIGHBOUR = array();
-            for ($p = 0; $p < 5; $p++) {
+            for ($p = 0; $p < 15; $p++) {
                 if (!isset($NEIGHBOUR[$DISTANCES[$p]['nklas']])) //memastikan nilai variabel/mengecek null atau tidak
                     $NEIGHBOUR[$DISTANCES[$p]['nklas']] = array(); //membentuk variabel menjadi array
 

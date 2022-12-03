@@ -292,7 +292,7 @@ class UjiController extends Controller
             sort($DISTANCES); //mengurutkan distance dari terdekat
 
             $NEIGHBOUR = array();
-            for ($p = 0; $p < 5; $p++) {
+            for ($p = 0; $p < 15; $p++) {
                 if (!isset($NEIGHBOUR[$DISTANCES[$p]['nklas']])) //memastikan nilai variabel/mengecek null atau tidak
                     $NEIGHBOUR[$DISTANCES[$p]['nklas']] = array(); //membentuk variabel menjadi array
 
@@ -326,7 +326,7 @@ class UjiController extends Controller
             }
 
             // dd($klasi);
-            $penguji->klasifikasi = trim($klasi);
+            $penguji->kid_u = trim($klasi);
 
             // dd($penguji);
             // $penguji->kid_u = trim($klasifikasi);

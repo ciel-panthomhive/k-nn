@@ -11,7 +11,7 @@ class Datauji extends Model
 
     protected $table = 'datauji';
 
-    protected $fillable = ['id', 'ram_u', 'internal_u', 'baterai_u', 'kam_depan_u', 'kam_belakang_u', 'kid_u'];
+    protected $fillable = ['id', 'ram_u', 'internal_u', 'baterai_u', 'kam_depan_u', 'kam_belakang_u', 'harga_u', 'kid_u'];
 
     public function dunormalize()
     {

@@ -25,7 +25,7 @@ class SearchController extends Controller
         // $train = Datatest::all();
         // $unorm = Dunormalize::all();
         $tnorm = Dtnormalize::all();
-        $k = 5;
+        $k = 15;
         // $id = $this->id;
         //fungsi masukkan data ke tabel data uji
         // $this->validate($request, [

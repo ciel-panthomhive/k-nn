@@ -21,8 +21,8 @@ class UjiImport implements ToModel
             'baterai_u' => $row[3],
             'kam_depan_u' => $row[4],
             'kam_belakang_u' => $row[5],
-            // 'harga_u' => $row[7],
-            'kid_u' => $row[6],
+            'harga_u' => $row[6],
+            'kid_u' => $row[7],
         ]);
     }
 }
